@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Preview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        
+        .preview-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .certificate-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        #certificateCanvas {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 100%;
+        }
+        
+        .description {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <h2>Certificate Preview</h2>
+        
+        <div class="description">
+            <strong>Sample Certificate:</strong> This shows exactly what participants will receive when they download their attendance certificate.
+        </div>
+        
+        <div class="certificate-container">
+            <canvas id="certificateCanvas" width="800" height="600"></canvas>
+        </div>
+        
+        <div class="features">
+            <div class="feature-box">
+                <h4>🎨 Professional Design</h4>
+                <p>Clean, formal layout with double borders and elegant typography suitable for medical education</p>
+            </div>
+            
+            <div class="feature-box">
+                <h4>📝 Official Format</h4>
+                <p>Traditional certificate language with participant name prominently displayed</p>
+            </div>
+            
+            <div class="feature-box">
+                <h4>📅 Date Formatting</h4>
+                <p>British date format (e.g., "15th January 2025") for UK medical education context</p>
+            </div>
+            
+            <div class="feature-box">
+                <h4>👩‍⚕️ Medical Context</h4>
+                <p>Includes deanery coordinator signature line and professional terminology</p>
+            </div>
+            
+            <div class="feature-box">
+                <h4>💾 High Quality</h4>
+                <p>Downloads as PNG image at 800x600 resolution - suitable for printing or digital portfolios</p>
+            </div>
+            
+            <div class="feature-box">
+                <h4>🔒 Validation</h4>
+                <p>Issue date and coordinator signature area provide authenticity markers</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            generateSampleCertificate();
+        });
+
+        function generateSampleCertificate() {
+            const canvas = document.getElementById('certificateCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Sample data
+            const data = {
+                participantName: "Dr Sarah Johnson",
+                courseTitle: "Advanced Clinical Skills Workshop",
+                teachingDate: "2025-01-15"
+            };
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#f8f9fa');
+            gradient.addColorStop(1, '#e9ecef');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Outer border
+            ctx.strokeStyle = '#2c3e50';
+            ctx.lineWidth = 8;
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            
+            // Inner border
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+            
+            // Title
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = 'bold 48px serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Certificate of Attendance', canvas.width / 2, 120);
+            
+            // Subtitle
+            ctx.font = '24px serif';
+            ctx.fillStyle = '#7f8c8d';
+            ctx.fillText('This certifies that', canvas.width / 2, 180);
+            
+            // Participant name
+            ctx.font = 'bold 36px serif';
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillText(data.participantName, canvas.width / 2, 240);
+            
+            // Course info
+            ctx.font = '20px serif';
+            ctx.fillStyle = '#7f8c8d';
+            ctx.fillText('has successfully attended', canvas.width / 2, 290);
+            
+            ctx.font = 'bold 28px serif';
+            ctx.fillStyle = '#3498db';
+            ctx.fillText(data.courseTitle, canvas.width / 2, 340);
+            
+            // Date
+            ctx.font = '18px serif';
+            ctx.fillStyle = '#7f8c8d';
+            const dateStr = new Date(data.teachingDate).toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+            ctx.fillText(`on ${dateStr}`, canvas.width / 2, 390);
+            
+            // Signature line
+            ctx.strokeStyle = '#2c3e50';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(500, 517);
+            ctx.lineTo(720, 517);
+            ctx.stroke();
+            
+            ctx.font = '14px serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('Deanery Coordinator', 500, 537);
+            
+            // Date issued
+            ctx.textAlign = 'right';
+            ctx.fillText(`Issued: ${new Date().toLocaleDateString('en-GB')}`, 720, 557);
+        }
+    </script>
+</body>
+</html>
