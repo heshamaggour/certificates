@@ -167,10 +167,7 @@
         <div class="content">
             <div class="info-box">
                 <h3>✅ Thank you for your feedback!</h3>
-                <p>Your course details are pre-filled below. Just enter your name to get your certificate.</p>
-                <div id="courseInfo" style="margin-top: 15px; padding: 15px; background: white; border-radius: 5px; display: none;">
-                    <!-- Course details will show here when pre-filled -->
-                </div>
+                <p>Please enter your name and confirm the course details for your certificate.</p>
             </div>
 
             <form id="certificateForm">
@@ -179,13 +176,14 @@
                     <input type="text" id="participantName" required>
                 </div>
                 
-                <div class="form-group" id="courseGroup">
-                    <label for="courseTitle">Course/Session Title*</label>
+                <div class="form-group">
+                    <label for="courseTitle">Training Day Title*</label>
                     <input type="text" id="courseTitle" placeholder="e.g. Clinical Skills Workshop" required>
+                    <small style="color: #7f8c8d; font-size: 0.9em;">Please enter the same title you used in the feedback form</small>
                 </div>
                 
-                <div class="form-group" id="dateGroup">
-                    <label for="teachingDate">Date You Attended*</label>
+                <div class="form-group">
+                    <label for="teachingDate">Training Date*</label>
                     <input type="date" id="teachingDate" required>
                 </div>
 
@@ -203,41 +201,6 @@
     </div>
 
     <script>
-        // Check for URL parameters and pre-fill course details
-        window.addEventListener('load', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            
-            const course = urlParams.get('course');
-            const date = urlParams.get('date');
-            
-            if (course && date) {
-                // Pre-fill the form
-                document.getElementById('courseTitle').value = course;
-                document.getElementById('teachingDate').value = date;
-                
-                // Hide the pre-filled fields and show course info instead
-                document.getElementById('courseGroup').style.display = 'none';
-                document.getElementById('dateGroup').style.display = 'none';
-                
-                // Show course info box
-                const dateFormatted = new Date(date).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                });
-                
-                document.getElementById('courseInfo').innerHTML = `
-                    <strong>Course:</strong> ${course}<br>
-                    <strong>Date:</strong> ${dateFormatted}
-                `;
-                document.getElementById('courseInfo').style.display = 'block';
-                
-                // Update the instruction text
-                document.querySelector('.info-box h3').textContent = '✅ Thank you for your feedback!';
-                document.querySelector('.info-box p').textContent = 'Your course details are confirmed below. Just enter your name to get your certificate.';
-            }
-        });
-
         // Form submission
         document.getElementById('certificateForm').addEventListener('submit', function(e) {
             e.preventDefault();
