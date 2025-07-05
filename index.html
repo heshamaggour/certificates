@@ -201,6 +201,41 @@
     </div>
 
     <script>
+        // Check for URL parameters and pre-fill course details
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            const course = urlParams.get('course');
+            const date = urlParams.get('date');
+            
+            if (course && date) {
+                // Pre-fill the form
+                document.getElementById('courseTitle').value = course;
+                document.getElementById('teachingDate').value = date;
+                
+                // Hide the pre-filled fields and show course info instead
+                document.getElementById('courseGroup').style.display = 'none';
+                document.getElementById('dateGroup').style.display = 'none';
+                
+                // Show course info box
+                const dateFormatted = new Date(date).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+                
+                document.getElementById('courseInfo').innerHTML = `
+                    <strong>Course:</strong> ${course}<br>
+                    <strong>Date:</strong> ${dateFormatted}
+                `;
+                document.getElementById('courseInfo').style.display = 'block';
+                
+                // Update the instruction text
+                document.querySelector('.info-box h3').textContent = '✅ Thank you for your feedback!';
+                document.querySelector('.info-box p').textContent = 'Your course details are confirmed below. Just enter your name to get your certificate.';
+            }
+        });
+
         // Form submission
         document.getElementById('certificateForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -275,21 +310,23 @@
             });
             ctx.fillText(`on ${dateStr}`, canvas.width / 2, 390);
             
-            // Signature line
+            // Signature section
             ctx.strokeStyle = '#2c3e50';
             ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.moveTo(500, 517);
-            ctx.lineTo(720, 517);
+            ctx.moveTo(500, 490);
+            ctx.lineTo(720, 490);
             ctx.stroke();
             
             ctx.font = '14px serif';
             ctx.textAlign = 'left';
-            ctx.fillText('Dr Hesham Aggour & Dr Steny Simon', 500, 537);
+            ctx.fillText('Dr Hesham Aggour & Dr Steny Simon', 500, 510);
+            ctx.fillText('Thames Valley Cardiology Teaching Coordinators', 500, 526);
             
             // Date issued
             ctx.textAlign = 'right';
-            ctx.fillText(`Issued: ${new Date().toLocaleDateString('en-GB')}`, 720, 557);
+            ctx.fillText(`Issued: ${new Date().toLocaleDateString('en-GB')}`, 720, 546);
+            
         }
 
         function downloadCertificate() {
