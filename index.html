@@ -168,9 +168,6 @@
             <div class="info-box">
                 <h3>✅ Thank you for your feedback!</h3>
                 <p>Please enter your name and confirm the course details for your certificate.</p>
-                <div id="courseInfo" style="margin-top: 15px; padding: 15px; background: white; border-radius: 5px; display: none;">
-                    <!-- Course details will show here when pre-filled -->
-                </div>
             </div>
 
             <form id="certificateForm">
@@ -179,13 +176,13 @@
                     <input type="text" id="participantName" required>
                 </div>
                 
-                <div class="form-group" id="courseGroup">
+                <div class="form-group">
                     <label for="courseTitle">Training Day Title*</label>
                     <input type="text" id="courseTitle" placeholder="e.g. Clinical Skills Workshop" required>
                     <small style="color: #7f8c8d; font-size: 0.9em;">Please enter the same title you used in the feedback form</small>
                 </div>
                 
-                <div class="form-group" id="dateGroup">
+                <div class="form-group">
                     <label for="teachingDate">Training Date*</label>
                     <input type="date" id="teachingDate" required>
                 </div>
@@ -313,7 +310,7 @@
             });
             ctx.fillText(`on ${dateStr}`, canvas.width / 2, 390);
             
-            // Signature section
+              // Signature section
             ctx.strokeStyle = '#2c3e50';
             ctx.lineWidth = 1;
             ctx.beginPath();
